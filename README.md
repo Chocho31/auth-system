@@ -11,7 +11,11 @@ After that you should enable the SPI interface, used by the RFID module, and the
 
 It is required to install the mfrc522 python library using the following command:
 
-``` sudo pip3 install mfrc522 ```
+```
+
+sudo pip3 install mfrc522
+
+```
 
 You can currently test the read and write capabilities for your RFID tag and record a simple video using the Raspbery Pi Camera Module.
 
