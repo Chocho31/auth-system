@@ -33,12 +33,21 @@ while continue_reading:
 	if status == reader.MI_OK:
 		print("Card detected")
 
-	# Get UID of the tag
-	(status, uid) = reader.MFRC522_Anticoll()
+		# Get UID of the tag
+		(status, uid) = reader.MFRC522_Anticoll()
 
-	# If UID was extracted successfully it is printed on the screen
-	if status == reader.MI_OK:
-		print("Card read UID: " + str(uid[0]) + ", "
-			+ str(uid[1]) + ", " + str(uid[2]) + ", "
-			+ str(uid[3]) + ", " + str(uid[4]))
+		if status == reader.MI_OK:
+			print("Card read UID: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3]))
 
+			# default key for authentication
+			key = [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]
+
+			reader.MFRC522_SelectTag(uid)
+
+			status = reader.MFRC522_Auth(reader.PICC_AUTHENT1A, 8, key, uid)
+
+			if status == reader.MI_OK:
+				print(reader.MFRC522_Read(8))
+				reader.MFRC522_StopCrypto1()
+			else:
+				print("Authentication error")
